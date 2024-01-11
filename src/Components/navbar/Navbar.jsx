@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./navbar.module.css";
 import { NavLink, Outlet } from "react-router-dom";
 import Navlink from "../Navlink";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  authSelector,
+  getUserAsync,
+  signoutUserAsync,
+} from "../../redux/reducers/authReducer";
 
 const Navbar = () => {
-  const user = false;
-  const handleSignOut = () => {};
+  const { user } = useSelector(authSelector);
+  const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    dispatch(signoutUserAsync());
+  };
+
+  useEffect(() => {
+    dispatch(getUserAsync());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

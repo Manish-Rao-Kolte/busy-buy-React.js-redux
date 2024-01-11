@@ -1,13 +1,13 @@
 
 .navContainer{
-    width: 92vw;
+    width: 94vw;
     font-family: 'Poppins', sans-serif;
     font-size: 1.3vmax;
     background-color: rgb(156, 216, 196);
     display: flex;
     justify-content: space-between;
     align-items: center !important;
-    padding: 1.5% 3.5%;
+    padding: 1.5% 3%;
     margin-top: 0.7%;
     margin-bottom: 2.5%;
 
@@ -21,7 +21,6 @@
 }
 
 .navLogo{
-    margin-left: 3%;
     text-decoration: none;
     color: rgb(81, 35, 124);
     padding: 2% 1%;

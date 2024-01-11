@@ -1,9 +1,20 @@
+import { useState } from "react";
 import styles from "./RegisterUser.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createUserAsync } from "../../../redux/reducers/authReducer";
 // import Backdrop from "@mui/material/Backdrop";
 // import CircularProgress from "@mui/material/CircularProgress";
 
 const RegisterUser = () => {
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const dispatch = useDispatch();
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    dispatch(createUserAsync(user));
+    setUser({ name: "", email: "", password: "" });
+  };
+
   return (
     <>
       {/* {loading && (
@@ -20,24 +31,41 @@ const RegisterUser = () => {
           className={styles.formInput}
           type="text"
           placeholder="Enter Name"
+          value={user.name}
           required
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              name: e.target.value,
+            })
+          }
         />
         <input
           className={styles.formInput}
           type="email"
           placeholder="Enter Email"
+          value={user.email}
           required
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              email: e.target.value,
+            })
+          }
         />
         <input
           className={styles.formInput}
           type="password"
           placeholder="Enter Password"
+          value={user.password}
           required
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              password: e.target.value,
+            })
+          }
         />
-        {error && <p>{error}</p>}
         <button type="submit" className={styles.formBtn}>
           {" "}
           Sign Up{" "}

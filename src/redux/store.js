@@ -11,4 +11,8 @@ export const store = configureStore({
     cartReducer,
     orderReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat([]),
 });
