@@ -11,11 +11,6 @@ const initialState = {
   user: null,
 };
 
-export const getUserAsync = createAsyncThunk("auth/getUserAsync", async () => {
-  const data = localStorage.getItem("user");
-  return JSON.parse(data);
-});
-
 export const createUserAsync = createAsyncThunk(
   "auth/createUserAsync",
   async (payload) => {
@@ -40,8 +35,7 @@ export const signinUserAsync = createAsyncThunk(
       payload.email,
       payload.password
     );
-    const user = userCredential.user;
-    return user;
+    return userCredential.user;
   }
 );
 
@@ -63,9 +57,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserAsync.fulfilled, (state, action) => {
-        state.user = action.payload;
-      })
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.user = action.payload;
       })

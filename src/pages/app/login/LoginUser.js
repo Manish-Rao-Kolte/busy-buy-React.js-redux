@@ -1,49 +1,62 @@
 import { useState } from "react";
 import styles from "../signUp/RegisterUser.module.css";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signinUserAsync } from "../../../redux/reducers/authReducer";
-// import Backdrop from "@mui/material/Backdrop";
-// import CircularProgress from "@mui/material/CircularProgress";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  authSelector,
+  signinUserAsync,
+} from "../../../redux/reducers/authReducer";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  loadingSelector,
+  toggleLoading,
+} from "../../../redux/reducers/loadingReducer";
 
 const LoginUser = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
-  const loading = false;
+  const [userCred, setUserCred] = useState({ email: "", password: "" });
+  const { loading } = useSelector(loadingSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSignIn = (e) => {
     e.preventDefault();
-    dispatch(signinUserAsync(user));
-    setUser({ email: "", password: "" });
+    dispatch(signinUserAsync(userCred)).then((data) => {
+      const user = data.payload;
+      navigate(`/user/${user.uid}`);
+    });
+    setUserCred({ email: "", password: "" });
   };
 
   return (
     <div className={styles.container}>
-      {/* {loading && (
+      {loading && (
         <Backdrop
           sx={{ color: "red", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-      )} */}
+      )}
       <form className={styles.formContainer} onSubmit={(e) => handleSignIn(e)}>
         <h2 className={styles.formHeader}>Sign In!</h2>
         <input
           className={styles.formInput}
           type="email"
           placeholder="Enter Email"
-          value={user.email}
+          value={userCred.email}
           required
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          onChange={(e) => setUserCred({ ...userCred, email: e.target.value })}
         />
         <input
           className={styles.formInput}
           type="password"
           placeholder="Enter Password"
-          value={user.password}
+          value={userCred.password}
           required
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
+          onChange={(e) =>
+            setUserCred({ ...userCred, password: e.target.value })
+          }
         />
         <button disabled={loading} className={styles.formBtn}>
           {" "}

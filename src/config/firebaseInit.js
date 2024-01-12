@@ -24,8 +24,3 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const auth = getAuth();
-
-onAuthStateChanged(auth, (data) => {
-  console.log(data);
-  localStorage.setItem("user", JSON.stringify(data));
-});

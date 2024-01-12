@@ -1,0 +1,54 @@
+.oderCardContainer {
+    width: 48vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'poppins', sans-serif;
+    overflow: hidden;
+
+
+    .orderTable {
+        background-color: rgb(245, 245, 245);
+        width: 45vw;
+
+        .title {
+            width: 20vw;
+            padding: 1.5% 2%;
+            overflow: hidden;
+
+            p{
+                margin: auto;
+                width: 18vw;
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 1%;
+            }
+            
+        }
+
+        th {
+            border-bottom: 2px solid black;
+            border-right: 2px solid white;
+            padding: 1.5% 2%;
+        }
+
+        td {
+            border-bottom: 2px solid white;
+            border-right: 2px solid white;
+            padding: 1.5% 2%;
+        }
+        
+        .fixedWidth{
+            width: 7vw;
+        }
+
+        tfoot td {
+            border: none;
+            padding: 1.5% 2%;
+        }
+    }
+}

@@ -1,36 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import styles from "./navbar.module.css";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Navlink from "../Navlink";
 import { useDispatch, useSelector } from "react-redux";
 import {
   authSelector,
   getUserAsync,
+  setInitialUser,
   signoutUserAsync,
 } from "../../redux/reducers/authReducer";
+import { auth } from "../../config/firebaseInit";
 
 const Navbar = () => {
   const { user } = useSelector(authSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
-    dispatch(signoutUserAsync());
+    dispatch(signoutUserAsync()).then(() => {
+      navigate("/");
+    });
   };
 
-  useEffect(() => {
-    dispatch(getUserAsync());
+  useLayoutEffect(() => {
+    const setAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(setInitialUser(user));
+      } else {
+        dispatch(setInitialUser(null));
+      }
+    });
+    return () => setAuth();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
       <div className={styles.navContainer}>
         <div className={styles.navLogoContainer}>
-          <NavLink className={styles.navLogo} to={user ? "/user" : "/"}>
+          <NavLink
+            className={styles.navLogo}
+            to={user ? `/user/${user.uid}` : "/"}
+          >
             <h3 style={{ display: "inline" }}>Busy Buy</h3>
           </NavLink>
           <span>
             {" "}
-            &nbsp; Hi {user && user.displayName ? user.displayName : "User"}!
+            &nbsp; Hi{" "}
+            {user && user.displayName
+              ? `${user.displayName
+                  .charAt(0)
+                  .toUpperCase()}${user.displayName.slice(1)}`
+              : "User"}
+            !
           </span>
         </div>
         <div className={styles.navItemContainer}>
@@ -81,7 +102,7 @@ const Navbar = () => {
             navClass={styles.navItem}
             name={"Home"}
             imgClass={styles.navIcon}
-            to={user ? "/user" : "/"}
+            to={user ? `/user/${user.uid}` : "/"}
           />
         </div>
       </div>

@@ -1,41 +1,55 @@
 import { useState } from "react";
 import styles from "./RegisterUser.module.css";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { createUserAsync } from "../../../redux/reducers/authReducer";
-// import Backdrop from "@mui/material/Backdrop";
-// import CircularProgress from "@mui/material/CircularProgress";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  loadingSelector,
+  toggleLoading,
+} from "../../../redux/reducers/loadingReducer";
 
 const RegisterUser = () => {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const [userCred, setUserCred] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading } = useSelector(loadingSelector);
+
   const handleSignUp = (e) => {
     e.preventDefault();
-    dispatch(createUserAsync(user));
-    setUser({ name: "", email: "", password: "" });
+    setUserCred({ name: "", email: "", password: "" });
+    dispatch(createUserAsync(userCred)).then((data) => {
+      const user = data.payload;
+      navigate(`/user/${user.uid}`);
+    });
   };
 
   return (
     <>
-      {/* {loading && (
+      {loading && (
         <Backdrop
           sx={{ color: "red", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-      )} */}
+      )}
       <form className={styles.formContainer} onSubmit={(e) => handleSignUp(e)}>
         <h2 className={styles.formHeader}>Sign Up!</h2>
         <input
           className={styles.formInput}
           type="text"
           placeholder="Enter Name"
-          value={user.name}
+          value={userCred.name}
           required
           onChange={(e) =>
-            setUser({
-              ...user,
+            setUserCred({
+              ...userCred,
               name: e.target.value,
             })
           }
@@ -44,11 +58,11 @@ const RegisterUser = () => {
           className={styles.formInput}
           type="email"
           placeholder="Enter Email"
-          value={user.email}
+          value={userCred.email}
           required
           onChange={(e) =>
-            setUser({
-              ...user,
+            setUserCred({
+              ...userCred,
               email: e.target.value,
             })
           }
@@ -57,11 +71,11 @@ const RegisterUser = () => {
           className={styles.formInput}
           type="password"
           placeholder="Enter Password"
-          value={user.password}
+          value={userCred.password}
           required
           onChange={(e) =>
-            setUser({
-              ...user,
+            setUserCred({
+              ...userCred,
               password: e.target.value,
             })
           }
