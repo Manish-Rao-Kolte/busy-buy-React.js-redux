@@ -1,6 +1,6 @@
 # Build
 
-Build link - https://incomparable-genie-6ea0fd.netlify.app/
+Build link - https://fastidious-nougat-8d756b.netlify.app/
 
 # Getting Started with Create React App
 
