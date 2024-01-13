@@ -1,12 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import styles from "./navbar.module.css";
-import {
-  NavLink,
-  Outlet,
-  redirect,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navlink from "../Navlink";
 import { useDispatch, useSelector } from "react-redux";
 import {
