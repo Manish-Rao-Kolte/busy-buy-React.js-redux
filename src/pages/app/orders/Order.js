@@ -1,41 +1,21 @@
 import React, { useLayoutEffect } from "react";
 import OrderCard from "../../../Components/order-card/OrderCard";
 import styles from "./order.module.css";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getOrdersAsync,
   orderSelector,
 } from "../../../redux/reducers/orderReducer";
-import {
-  loadingSelector,
-  toggleLoading,
-} from "../../../redux/reducers/loadingReducer";
 import { authSelector } from "../../../redux/reducers/authReducer";
 
 const Order = () => {
   const { orders } = useSelector(orderSelector);
-  const { loading } = useSelector(loadingSelector);
   const { user } = useSelector(authSelector);
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     user && dispatch(getOrdersAsync(user)).then(() => {});
   }, [user]);
-
-  if (loading) {
-    return (
-      <>
-        <Backdrop
-          sx={{ color: "red", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </>
-    );
-  }
 
   return (
     <div className={styles.orderContainer}>

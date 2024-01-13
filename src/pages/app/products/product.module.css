@@ -1,16 +1,33 @@
 
+
+.productPage{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100vw;
+}
+
 .filterContainer{
-    top: 40vh;
+    position: fixed;
+    top: 45vh;
     left: 0.5vw;
-    width: 13vw;
+    max-height: fit-content ;
     background-color: rgb(242, 242, 255);
-    position: absolute;
     padding: 1.5% 1%;
     border-radius: 8px;
     font-family: 'Times New Roman', Times, serif;
 
+    .filterHeading{
+        font-size: 1.4vmax;
+        font-weight: 550
+    }
+    p{
+        font-size: 1.2vmax;
+    }
+
     input{
-        width: 92%;
+        width: 10vw;
+        height: 5vh;
     }
 
     .inputContainer{
@@ -35,7 +52,7 @@
 
 .productsContainer {
     width: 70vw;
-    padding: 2%;
+    padding: 2% 0;
     margin: auto;
     display: flex;
     flex-direction: column;

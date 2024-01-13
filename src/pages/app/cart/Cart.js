@@ -1,8 +1,6 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 import ProductCard from "../../../Components/product-card/ProductCard";
 import styles from "./cart.module.css";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cartSelector,
@@ -10,7 +8,10 @@ import {
 } from "../../../redux/reducers/cartReducer";
 import { createOrderAsync } from "../../../redux/reducers/orderReducer";
 import { authSelector } from "../../../redux/reducers/authReducer";
-import { loadingSelector } from "../../../redux/reducers/loadingReducer";
+import {
+  loadingSelector,
+  setLoadingTrue,
+} from "../../../redux/reducers/loadingReducer";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -21,6 +22,7 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const createOrder = () => {
+    dispatch(setLoadingTrue());
     dispatch(createOrderAsync({ user, cart, cartTotal })).then(() => {
       navigate(`/user/${user.uid}/orders`);
     });
@@ -29,19 +31,6 @@ const Cart = () => {
   useLayoutEffect(() => {
     user && dispatch(getCartAsync(user));
   }, [user]);
-
-  if (loading) {
-    return (
-      <>
-        <Backdrop
-          sx={{ color: "red", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </>
-    );
-  }
 
   return (
     <>

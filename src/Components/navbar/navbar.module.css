@@ -63,6 +63,7 @@
     background-color: rgb(134, 92, 174);
     color: white;
     font-weight: 700;
-    padding: 1%;
+    padding: 0.1vmax;
     border-radius: 10px;
+    align-items: center;
 }

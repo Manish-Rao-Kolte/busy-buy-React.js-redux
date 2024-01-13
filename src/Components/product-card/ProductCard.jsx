@@ -10,10 +10,10 @@ import {
 import { authSelector } from "../../redux/reducers/authReducer";
 
 function ProductCard(props) {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { prod, incart, qty } = props;
   const { image, price, title } = prod;
-  const [loading, setLoading] = useState(false);
   const { user } = useSelector(authSelector);
 
   const handleAddToCart = () => {
@@ -31,11 +31,17 @@ function ProductCard(props) {
   };
 
   const handleIncreaseCartQty = () => {
-    dispatch(increaseCartQtyAsync({ user, prod }));
+    setLoading(true);
+    dispatch(increaseCartQtyAsync({ user, prod })).then(() => {
+      setLoading(false);
+    });
   };
 
   const handleDecreaseCartQty = () => {
-    dispatch(decreaseCartQtyAsync({ user, prod }));
+    setLoading(true);
+    dispatch(decreaseCartQtyAsync({ user, prod })).then(() => {
+      setLoading(false);
+    });
   };
 
   return (

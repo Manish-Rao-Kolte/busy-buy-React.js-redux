@@ -37,9 +37,7 @@ export const createOrderAsync = createAsyncThunk(
       "orders"
     );
     const docSnap = await getDoc(docRef);
-    console.log(docSnap);
     if (docSnap.exists()) {
-      console.log("i am working1");
       await updateDoc(docRef, {
         list: [
           {
@@ -51,7 +49,6 @@ export const createOrderAsync = createAsyncThunk(
         ],
       });
     } else {
-      console.log("i am working2");
       await setDoc(docRef, {
         list: [
           {

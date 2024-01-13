@@ -3,11 +3,9 @@ import styles from "./RegisterUser.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserAsync } from "../../../redux/reducers/authReducer";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import {
   loadingSelector,
-  toggleLoading,
+  setLoadingTrue,
 } from "../../../redux/reducers/loadingReducer";
 
 const RegisterUser = () => {
@@ -18,11 +16,11 @@ const RegisterUser = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading } = useSelector(loadingSelector);
 
   const handleSignUp = (e) => {
     e.preventDefault();
     setUserCred({ name: "", email: "", password: "" });
+    dispatch(setLoadingTrue());
     dispatch(createUserAsync(userCred)).then((data) => {
       const user = data.payload;
       navigate(`/user/${user.uid}`);
@@ -31,14 +29,6 @@ const RegisterUser = () => {
 
   return (
     <>
-      {loading && (
-        <Backdrop
-          sx={{ color: "red", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
       <form className={styles.formContainer} onSubmit={(e) => handleSignUp(e)}>
         <h2 className={styles.formHeader}>Sign Up!</h2>
         <input
