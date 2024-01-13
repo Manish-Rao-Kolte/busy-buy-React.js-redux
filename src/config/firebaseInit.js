@@ -4,7 +4,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { getAuth } from "@firebase/auth";
 
 const apiKey = process.env.REACT_APP_FIREBASE_API_KEY;
 const appId = process.env.REACT_APP_FIREBASE_APP_ID;

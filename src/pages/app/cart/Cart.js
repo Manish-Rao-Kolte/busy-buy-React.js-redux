@@ -36,7 +36,7 @@ const Cart = () => {
 
   useLayoutEffect(() => {
     user && dispatch(getCartAsync(user));
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

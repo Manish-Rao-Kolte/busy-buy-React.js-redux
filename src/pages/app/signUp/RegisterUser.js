@@ -1,12 +1,9 @@
 import { useState } from "react";
 import styles from "./RegisterUser.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createUserAsync } from "../../../redux/reducers/authReducer";
-import {
-  loadingSelector,
-  setLoadingTrue,
-} from "../../../redux/reducers/loadingReducer";
+import { setLoadingTrue } from "../../../redux/reducers/loadingReducer";
 import { toast } from "react-toastify";
 
 const RegisterUser = () => {

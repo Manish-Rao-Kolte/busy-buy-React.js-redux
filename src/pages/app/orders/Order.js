@@ -15,7 +15,7 @@ const Order = () => {
 
   useLayoutEffect(() => {
     user && dispatch(getOrdersAsync(user)).then(() => {});
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={styles.orderContainer}>

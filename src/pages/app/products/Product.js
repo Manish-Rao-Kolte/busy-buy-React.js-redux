@@ -14,10 +14,6 @@ import {
   priceFilteredProducts,
   textFilteredProducts,
 } from "../../../redux/reducers/filterReducer";
-import {
-  setLoadingFalse,
-  setLoadingTrue,
-} from "../../../redux/reducers/loadingReducer";
 
 const Product = () => {
   const { user } = useSelector(authSelector);
