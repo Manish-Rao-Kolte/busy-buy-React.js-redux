@@ -7,7 +7,26 @@
     text-align: center;
     font-family: 'poppins', sans-serif;
     overflow: hidden;
+    margin-bottom: 3%;
 
+    .orderCardHeader{
+        width: 100%;
+        margin-bottom: 2%;
+
+        button{
+            padding: 0.3%;
+            white-space: nowrap;
+            border-radius: 5px;
+            background-color: rgb(105, 105, 218);
+            color: white;
+            font-size: 0.7vmax;
+        }
+
+        button:hover{
+            scale: 0.9;
+            background-color: rgb(145, 72, 214);
+        }
+    }
 
     .orderTable {
         background-color: rgb(245, 245, 245);

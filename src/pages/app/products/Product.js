@@ -14,8 +14,12 @@ import {
   priceFilteredProducts,
   textFilteredProducts,
 } from "../../../redux/reducers/filterReducer";
+import {
+  setLoadingFalse,
+  setLoadingTrue,
+} from "../../../redux/reducers/loadingReducer";
 
-const Product = (props) => {
+const Product = () => {
   const { user } = useSelector(authSelector);
   const { products } = useSelector(productSelector);
   const { filterRange, filteredProducts } = useSelector(filterSelector);
@@ -45,7 +49,7 @@ const Product = (props) => {
   };
 
   useLayoutEffect(() => {
-    dispatch(getProductsAsync()).then(() => {});
+    dispatch(getProductsAsync());
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

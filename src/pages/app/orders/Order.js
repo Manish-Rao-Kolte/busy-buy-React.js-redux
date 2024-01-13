@@ -22,12 +22,14 @@ const Order = () => {
       {orders.length === 0 && <h2>No Order To Show, Place a new order!</h2>}
       <div className={styles.oderList}>
         {orders.length !== 0 &&
-          orders.map((item) => {
+          orders.map((item, index) => {
             return (
               <OrderCard
                 order={item.order}
                 date={item.orderDate}
                 orderTotal={item.orderTotal}
+                key={index}
+                index={index}
               />
             );
           })}

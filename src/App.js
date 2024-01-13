@@ -8,12 +8,17 @@ import LoginUser from "./pages/app/login/LoginUser";
 import Product from "./pages/app/products/Product";
 import Cart from "./pages/app/cart/Cart";
 import Order from "./pages/app/orders/Order";
+import Page404 from "./pages/misc/page404/Page404";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  // Routing of the app is created here. Contains dynamic routing as well.
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Navbar />,
+      errorElement: <Page404 />,
       children: [
         {
           index: true,
@@ -52,6 +57,7 @@ function App() {
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
+      <ToastContainer autoClose={600} limit={3}></ToastContainer>
     </div>
   );
 }

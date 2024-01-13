@@ -1,6 +1,12 @@
 import React, { useLayoutEffect } from "react";
 import styles from "./navbar.module.css";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  redirect,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Navlink from "../Navlink";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,23 +22,37 @@ import {
 } from "../../redux/reducers/loadingReducer";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { user } = useSelector(authSelector);
   const { loading } = useSelector(loadingSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   if (loading) {
     setTimeout(() => {
       dispatch(setLoadingFalse());
-    }, 500);
+    }, 400);
+  }
+
+  if (user) {
+    const bool = location.pathname.includes(user.uid);
+    if (!bool) {
+      navigate(`/user/${user.uid}`);
+    }
   }
 
   const handleSignOut = () => {
-    dispatch(signoutUserAsync()).then(() => {
-      navigate("/");
-    });
+    dispatch(signoutUserAsync())
+      .then(() => {
+        navigate("/");
+        toast.success("Signed out successfully!!");
+      })
+      .catch((err) => {
+        toast.error("An error occured!!");
+      });
   };
 
   const handleLoading = () => {

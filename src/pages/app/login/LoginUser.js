@@ -7,6 +7,7 @@ import {
   loadingSelector,
   setLoadingTrue,
 } from "../../../redux/reducers/loadingReducer";
+import { toast } from "react-toastify";
 
 const LoginUser = () => {
   const [userCred, setUserCred] = useState({ email: "", password: "" });
@@ -17,10 +18,15 @@ const LoginUser = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
     dispatch(setLoadingTrue());
-    dispatch(signinUserAsync(userCred)).then((data) => {
-      const user = data.payload;
-      navigate(`/user/${user.uid}`);
-    });
+    dispatch(signinUserAsync(userCred))
+      .then((data) => {
+        const user = data.payload;
+        navigate(`/user/${user.uid}`);
+        toast.success("Signed in successfully!!");
+      })
+      .catch((err) => {
+        toast.error("Error in login!!");
+      });
     setUserCred({ email: "", password: "" });
   };
 

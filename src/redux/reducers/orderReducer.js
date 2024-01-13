@@ -68,6 +68,28 @@ export const createOrderAsync = createAsyncThunk(
   }
 );
 
+export const deleteOrderAsync = createAsyncThunk(
+  "orders/deleteOrderAsync",
+  async (payload) => {
+    const docRef = doc(
+      db,
+      "usersOrders",
+      payload.user.uid,
+      "myOrders",
+      "orders"
+    );
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const orderList = [...docSnap.data().list];
+      orderList.splice(payload.index, 1);
+      await updateDoc(docRef, {
+        list: [...orderList],
+      });
+      return (await getDoc(docRef)).data().list;
+    }
+  }
+);
+
 const orderSlice = createSlice({
   name: "orders",
   initialState: initialState,
@@ -78,6 +100,9 @@ const orderSlice = createSlice({
         state.orders = [...action.payload];
       })
       .addCase(createOrderAsync.fulfilled, (state, action) => {
+        state.orders = [...action.payload];
+      })
+      .addCase(deleteOrderAsync.fulfilled, (state, action) => {
         state.orders = [...action.payload];
       });
   },

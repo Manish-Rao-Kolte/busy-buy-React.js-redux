@@ -13,6 +13,7 @@ import {
   setLoadingTrue,
 } from "../../../redux/reducers/loadingReducer";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const { cart, cartTotal } = useSelector(cartSelector);
@@ -23,9 +24,14 @@ const Cart = () => {
 
   const createOrder = () => {
     dispatch(setLoadingTrue());
-    dispatch(createOrderAsync({ user, cart, cartTotal })).then(() => {
-      navigate(`/user/${user.uid}/orders`);
-    });
+    dispatch(createOrderAsync({ user, cart, cartTotal }))
+      .then(() => {
+        navigate(`/user/${user.uid}/orders`);
+        toast.success("Order created successfully!!");
+      })
+      .catch((err) => {
+        toast.error("Unable to place order!!");
+      });
   };
 
   useLayoutEffect(() => {
